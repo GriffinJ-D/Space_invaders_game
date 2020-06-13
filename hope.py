@@ -192,8 +192,7 @@ while running:
     if enemybullet.ready:
         enemy_shoot(numb)
 
-    if yourbullet.Y <= 0:
-        yourbullet.Y = 800
+    if not isCollision(yourbullet.X, yourbullet.Y, yours.X, yours.Y, 1000):
         yourbullet.ready = True
     if not yourbullet.ready:
         fire_bullet(yourbullet, yourbullet.X, yourbullet.Y, yourbullet.angle)
