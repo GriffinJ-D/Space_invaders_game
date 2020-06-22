@@ -51,7 +51,7 @@ font = pygame.font.Font('freesansbold.ttf', 32)
 color = (255, 0, 0)
 before = time.time()
 
-laser_sound = mixer.Sound('lasersoundogg.ogg')
+laser_sound = mixer.Sound('lasersound3.wav')
 
 TextX = 10
 TextY = 10
