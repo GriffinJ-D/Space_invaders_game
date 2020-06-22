@@ -51,6 +51,8 @@ font = pygame.font.Font('freesansbold.ttf', 32)
 color = (255, 0, 0)
 before = time.time()
 
+laser_sound = mixer.Sound('lasersoundogg.ogg')
+
 TextX = 10
 TextY = 10
 
@@ -90,7 +92,7 @@ def show_score(x, y):
     score = font.render("Score :" + str(score_value), True, (255, 255, 255))
     screen.blit(score, (x, y))
 
-def barrier(x, y):
+def show_barrier(x, y):
     # screen.blit(Barrier1.image, (x, y))
     screen.blit(Barrier1.image, (x - int(Barrier1.image.get_width() / 2), y - int(Barrier1.image.get_height() / 2)))
 
@@ -176,9 +178,8 @@ while running:
     # laser = pygame.Rect(Boss.X - 13000, Boss.Y, 26, 800)
     after = time.time()
     # LASER SOUND (NOT WORKING)
-    # while laser.centerx > 0:
-    #     laser_sound = mixer.Sound('lasersoundtest.wav')
-    #     laser_sound.play()
+    if laser.centerx > 0:
+        laser_sound.play()
 
     laser_yours_ = isCollision(yours.X, yours.Y, Boss.X, yours.Y, 50)
     if before + 2 < after and not laser_yours_:
@@ -291,15 +292,15 @@ while running:
 
     for i in range(len(barriers)):
         barrier = barriers[i]
-        barrier(barrier.x, barrier.y)
+        show_barrier(barrier.X, barrier.Y)
         # after = time.time()
-        # laser_barrier_ = isCollision(barrier.x, barrier.y, Boss.X, barrier.y, 50)
+        # laser_barrier_ = isCollision(barrier.X, barrier.Y, Boss.X, barrier.Y, 50)
         # if before + 2 < after and not laser_barrier_:
         #     laser = pygame.Rect(Boss.X - 13, Boss.Y, 26, 800)
         #     pygame.draw.rect(screen, color, laser)
         #
         #     # before = time.time()
-        # laser_barrier = isCollision(barrier.x, barrier.y, laser.centerx, barrier.y, 50)
+        # laser_barrier = isCollision(barrier.X, barrier.Y, laser.centerx, barrier.Y, 50)
         # if before + 2 < after and laser_barrier:
         #     if laser_yours_:
         #         hit_sound = mixer.Sound('explosion.wav')
@@ -308,18 +309,18 @@ while running:
         #         before = time.time()
         #         BarrierHealth[i] -= 1
         #         if BarrierHealth[i] <= 0:
-        #             barrier.x = 2000
-        #             barrier.y = 50
-        barrier_hit = isCollision(barrier.x, barrier.y, enemybullet.X, enemybullet.Y, 37)
+        #             barrier.X = 2000
+        #             barrier.Y = 50
+        barrier_hit = isCollision(barrier.X, barrier.Y, enemybullet.X, enemybullet.Y, 37)
         if barrier_hit:
             hit_sound = mixer.Sound('explosion.wav')
             hit_sound.play()
             enemybullet.Y = 600
             BarrierHealth[i] -= 1
             if BarrierHealth[i] <= 0:
-                barrier.x = 2000
-                barrier.y = 50
-        barrier_hit1 = isCollision(barrier.x, barrier.y, yourbullet.X, yourbullet.Y, 37)
+                barrier.X = 2000
+                barrier.Y = 50
+        barrier_hit1 = isCollision(barrier.X, barrier.Y, yourbullet.X, yourbullet.Y, 37)
         if barrier_hit1:
             hit_sound = mixer.Sound('explosion.wav')
             hit_sound.play()
@@ -327,9 +328,9 @@ while running:
             yourbullet.ready = True
             BarrierHealth[i] -= 1
             if BarrierHealth[i] <= 0:
-                barrier.x = 2000
-                barrier.y = 50
-        stop = isCollision(yours.X, yours.Y, barrier.x, barrier.y, 65)
+                barrier.X = 2000
+                barrier.Y = 50
+        stop = isCollision(yours.X, yours.Y, barrier.X, barrier.Y, 65)
         if stop:
             yours.X -= yours.speedX
             yours.Y += yours.speedY
