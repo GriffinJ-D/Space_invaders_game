@@ -90,31 +90,36 @@ def enemy_shoot(ship):
 
 def show_score(x, y):
     score = font.render("Score :" + str(score_value), True, (255, 255, 255))
-    screen.blit(score, (x, y))
+    blit_easy(score, (x, y))
 
 def show_barrier(x, y):
     # screen.blit(Barrier1.image, (x, y))
-    screen.blit(Barrier1.image, (x - int(Barrier1.image.get_width() / 2), y - int(Barrier1.image.get_height() / 2)))
+    blit_easy(Barrier1.image, (x - int(Barrier1.image.get_width() / 2), y - int(Barrier1.image.get_height() / 2)))
 
 def player(x, y):
     img_copy = pygame.transform.rotate(yours.image, yours.angle)
-    screen.blit(img_copy, (x - int(img_copy.get_width() / 2), y - int(img_copy.get_height() / 2)))
+    blit_easy(img_copy, (x - int(img_copy.get_width() / 2), y - int(img_copy.get_height() / 2)))
     # screen.blit(pygame.transform.rotate(yours.image, yours.angle), (x, y))
 
 def boss(x, y):
-    screen.blit(Boss.image, (x - int(Boss.image.get_width() / 2), y - int(Boss.image.get_height() / 2)))
+    blit_easy(Boss.image, (x - int(Boss.image.get_width() / 2), y - int(Boss.image.get_height() / 2)))
+
+def blit_easy(img, pos):
+   x = int(pos[0])
+   y = int(pos[1])
+   screen.blit(img, (x, y))
 
 
 def enemy(x, y, i):
     # screen.blit(Enemyimg[i], (x, y))
-    screen.blit(Enemyimg[i], (x - int(Enemyimg[i].get_width() / 2), y - int(Enemyimg[i].get_height() / 2)))
+    blit_easy(Enemyimg[i], (x - int(Enemyimg[i].get_width() / 2), y - int(Enemyimg[i].get_height() / 2)))
 
 
 def fire_bullet(bullet, x, y, angle):
     bullet.ready = False
     # screen.blit(bullet.image, (x - 16, y + 10))
     img_copy = pygame.transform.rotate(bullet.image, angle)
-    screen.blit(img_copy, (x - int(img_copy.get_width() / 2), y - int(img_copy.get_height() / 2)))
+    blit_easy(img_copy, (x - int(img_copy.get_width() / 2), y - int(img_copy.get_height() / 2)))
 
 
 def isCollision(X1, Y1, X2, Y2, pix):
@@ -183,7 +188,7 @@ while running:
 
     laser_yours_ = isCollision(yours.X, yours.Y, Boss.X, yours.Y, 50)
     if before + 2 < after and not laser_yours_:
-        laser = pygame.Rect(Boss.X - 13, Boss.Y, 26, 800)
+        laser = pygame.Rect(int(Boss.X - 13), int(Boss.Y), 26, 800)
         pygame.draw.rect(screen, color, laser)
 
         # before = time.time()
